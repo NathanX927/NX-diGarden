@@ -1,3 +1,238 @@
 @use "./base.scss";
 
 // put your custom CSS here!
+/* =========================================
+   Obsidian Callout to Floating Cards
+   ========================================= */
+.callout[data-callout="card"] {
+  background-color: var(--light) !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  border-left: 1px solid rgba(0, 0, 0, 0.08) !important; /* 覆盖 callout 原生左粗边条 */
+  border-radius: 12px !important;
+  padding: 1.25rem 1.5rem !important;
+  margin: 1.25rem 0 !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04) !important;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease !important;
+
+  /* 悬浮上浮与弥散阴影 */
+  &:hover {
+    transform: translateY(-3px) !important;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08) !important;
+    border-color: rgba(0, 0, 0, 0.18) !important;
+  }
+
+  /* 隐藏 callout 自带的小折叠图标 */
+  .callout-icon {
+    display: none !important;
+  }
+
+  /* 标题与超链接 */
+  .callout-title {
+    padding: 0 !important;
+    margin-bottom: 0.5rem !important;
+
+    .callout-title-inner {
+      font-size: 1.15rem !important;
+      font-weight: 600 !important;
+
+      a {
+        color: var(--dark) !important;
+        text-decoration: none !important;
+
+        &:hover {
+          color: var(--secondary) !important;
+        }
+      }
+    }
+  }
+
+  /* 描述正文 */
+  .callout-content {
+    padding: 0 !important;
+
+    p {
+      margin: 0 !important;
+      font-size: 0.9rem !important;
+      color: var(--darkgray) !important;
+      line-height: 1.5 !important;
+    }
+  }
+}
+
+/* 暗色模式适配 */
+:root[saved-theme="dark"] .callout[data-callout="card"] {
+  background-color: var(--lightgray) !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+  border-left-color: rgba(255, 255, 255, 0.08) !important;
+
+  &:hover {
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.4) !important;
+    border-color: var(--secondary) !important;
+  }
+}
+/* =========================================
+   Table of Contents (TOC) Visual Enhancement
+   ========================================= */
+.toc {
+  ul {
+    padding-left: 0.75rem !important;
+
+    li {
+      margin: 0.35rem 0 !important;
+      list-style-type: none !important;
+
+      a {
+        display: block !important;
+        color: var(--darkgray) !important; /* 默认未激活状态：弱化灰色 */
+        font-size: 0.85rem !important;
+        line-height: 1.4 !important;
+        text-decoration: none !important;
+        border-left: 2px solid transparent !important; /* 左侧留出高亮指示线位置 */
+        padding-left: 0.5rem !important;
+        transition: color 0.15s ease, border-color 0.15s ease, transform 0.15s ease !important;
+
+        /* 鼠标悬停：变亮 + 变主题色 */
+        &:hover {
+          color: var(--secondary) !important;
+          border-left-color: var(--lightgray) !important;
+          transform: translateX(2px) !important;
+        }
+
+        /* 当前正在浏览或点击的小节 (Quartz 自动加上的激活类名) */
+        &.in-view {
+          color: var(--secondary) !important; /* 激活文字：高亮主题色 */
+          font-weight: 600 !important;
+          border-left-color: var(--secondary) !important; /* 左侧醒目竖线 */
+        }
+      }
+
+      /* 针对更深层级（H3、H4）的缩进与字号微调 */
+      ul {
+        padding-left: 0.75rem !important;
+        margin-top: 0.2rem !important;
+
+        li a {
+          font-size: 0.8rem !important;
+          opacity: 0.85 !important;
+
+          &.in-view {
+            opacity: 1 !important;
+          }
+        }
+      }
+    }
+  }
+}
+/* =========================================
+   Fix Quartz TOC Collapsed Overflow Bug
+   ========================================= */
+.toc {
+  overflow: hidden !important; /* 确保收起时绝不出现横向滚动条 */
+
+  /* 针对 TOC 内容容器进行高度和溢出控制 */
+  #toc-content {
+    overflow: hidden !important;
+    transition: max-height 0.25s ease-in-out, opacity 0.2s ease !important;
+
+    /* 收起状态：强制高度归零并完全隐藏内容 */
+    &.collapsed {
+      max-height: 0 !important;
+      opacity: 0 !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      pointer-events: none !important;
+    }
+  }
+
+  /* 修复折叠切换按钮对齐 */
+  button#toc {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    width: 100% !important;
+    padding: 0.25rem 0 !important;
+    background: transparent !important;
+    border: none !important;
+    cursor: pointer !important;
+
+    h3 {
+      margin: 0 !important;
+      font-size: 1rem !important;
+    }
+
+    /* 旋转折叠小箭头 */
+    svg {
+      transition: transform 0.2s ease !important;
+    }
+
+    &.collapsed svg {
+      transform: rotate(-90deg) !important;
+    }
+  }
+}
+
+/* ================= Explorer 侧边栏精致化 ================= */
+
+.explorer {
+  margin-top: 1.2rem;
+
+  // 标题样式：微小大写字母，精致现代感
+  button#explorer {
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--gray);
+    opacity: 0.8;
+    transition: opacity 0.2s ease;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  // 文件夹与文件列表容器
+  .overflow {
+    padding-left: 0.2rem;
+    scrollbar-width: thin; // 细滚动条
+  }
+
+  ul {
+    border-left: 1px solid rgba(var(--lightgray), 0.6); // 纤细的左侧引导线
+    margin-left: 0.5rem;
+    padding-left: 0.75rem;
+
+    li {
+      margin: 0.25rem 0;
+
+      // 文件/文件夹链接项
+      a {
+        display: inline-block;
+        padding: 0.2rem 0.45rem;
+        border-radius: 6px;
+        font-size: 0.9rem;
+        color: var(--darkgray);
+        transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+
+        &:hover {
+          color: var(--secondary);
+          background-color: var(--lightgray);
+          transform: translateX(3px); // 微位移，灵动感
+        }
+      }
+
+      // 当前激活（当前正在阅读的文章）高亮
+      a[aria-current="page"] {
+        color: var(--secondary);
+        font-weight: 600;
+        background-color: rgba(var(--secondary), 0.08);
+      }
+    }
+  }
+
+  // 文件夹折叠小箭头优化
+  svg {
+    stroke-width: 2.2;
+    transition: transform 0.2s ease;
+  }
+}
