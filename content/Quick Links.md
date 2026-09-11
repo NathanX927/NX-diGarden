@@ -1,0 +1,1 @@
+https://ai.math.uw.edu/projects/fall-2026/
