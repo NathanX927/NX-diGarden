@@ -1,5 +1,5 @@
 # Haven
-### Comp: Omen Breach Neon Sova Cypher
+ Comp: Omen Breach Neon Sova Cypher
 ## Defense
 
 ![[Pasted image 20260911224117.png]]
@@ -42,3 +42,6 @@ sova电车库拌线然后架车库门口，omen直接往前TP，霓虹滑铲拉�
 Omen中路封展开烟，拉扯对面走位，其他人等5-10秒左右大脚步去A爆弹。
 
 ---
+
+# Lotus:
+ comp: 
