@@ -23,3 +23,6 @@ style
 memory
 delivery
 structure of the speech
+
+dialectic
+hegelian socratic
